@@ -7,13 +7,16 @@ export const addDestination = async (formData) => {
   console.log(formData);
   const destinationName = Object.fromEntries(formData.entries());
   try {
-    const response = await fetch("http://localhost:9000/destination", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      "https://wanderlust-crud-server.onrender.com/destination",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(destinationName),
       },
-      body: JSON.stringify(destinationName),
-    });
+    );
 
     if (!response.ok) {
       throw new Error("Failed to add destination");
@@ -32,13 +35,16 @@ export const updateDestination = async (id, formData) => {
   console.log(formData);
   const updatedData = Object.fromEntries(formData.entries());
   try {
-    const response = await fetch(`http://localhost:9000/destination/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `https://wanderlust-crud-server.onrender.com/destination/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
       },
-      body: JSON.stringify(updatedData),
-    });
+    );
 
     if (response.ok) {
       console.log("Destination updated successfully");
@@ -56,7 +62,7 @@ export const updateDestination = async (id, formData) => {
 
 export const deleteDestination = async (id) => {
   try {
-    const res = await fetch(`http://localhost:9000/destination/${id}`, {
+    const res = await fetch(`https://wanderlust-crud-server.onrender.com/destination/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
