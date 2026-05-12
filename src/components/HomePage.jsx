@@ -1,11 +1,11 @@
-"use client";
-import React from "react";
 import DestinationCard from "./DestinationCard";
 import { Button } from "@heroui/react";
 import { ArrowRight } from "@gravity-ui/icons";
 import Link from "next/link";
+import { allDestinations } from "@/app/lib/data";
 
-const HomePage = ({ destinations = [] }) => {
+const HomePage = async () => {
+  const destinations = await allDestinations();
   return (
     <div className="mx-5 xl:mx-0">
       <div className="w-full max-w-360 mx-auto">

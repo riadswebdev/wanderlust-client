@@ -1,13 +1,20 @@
 import { getDestinationById } from "@/app/lib/data";
+import BackToDestination from "@/components/BackToDestination";
+import { DeleteDestination } from "@/components/DeleteDestination";
+import { EditDestination } from "@/components/EditDestination";
 import { Calendar, Check, StarFill } from "@gravity-ui/icons";
+import { Button } from "@heroui/react";
 import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
+
 
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const destination = await getDestinationById(id);
   console.log(destination);
-  const {
+
+    const {
+      _id,
     destinationName = "",
     description = "",
     imageUrl = "Default Image URL",
@@ -33,16 +40,28 @@ const DetailsPage = async ({ params }) => {
   } = destination || {};
   return (
     <div className="w-full max-w-7xl mx-auto ">
-      <div className="relative w-full aspect-video">
-        <Image
-          unoptimized
-          src={imageUrl}
-          alt={destinationName}
-          fill
-          className="rounded-lg object-cover "
-        />
-      </div>
       <div className="">
+        <div className="flex items-center justify-between mb-5">
+          <div className="">
+            <BackToDestination />
+          </div>
+          <div className="flex items-center gap-2">
+            <EditDestination destination={destination} />
+
+            <DeleteDestination id={_id} />
+          </div>
+        </div>
+        <div className="relative w-full h-150 aspect-video mb-20">
+          <Image
+            unoptimized
+            src={imageUrl}
+            alt={destinationName}
+            fill
+            className="rounded-lg object-cover "
+          />
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
         <div className="">
           <div className="mb-4">
             <p className="flex items-center gap-1 font-medium text-[#6C696D] ">
@@ -84,21 +103,45 @@ const DetailsPage = async ({ params }) => {
             ))}
           </ul>
         </div>
-        <div className="">
-          <div>
-            <div>
-              <div className="">
-                <p>Starting from</p> <p>${starting_price_usd}</p>{" "}
-                <p>{price_basis}</p>
-              </div>
-            </div>
-            <div className="text-[#6C696D]">{date}</div>
-            <div className="text-[#6C696D]">
-              {/* <Button>Book Now</Button> */}
-            </div>
+
+        <div className="border-2 shadow p-5 rounded-lg w-full max-w-100 ">
+          <div className="mb-5">
             <div className="">
-              <p>{customer_support}</p>
+              <p
+                className="mb-1 text-[#6C696D]
+              "
+              >
+                Starting from
+              </p>
+              <p className="text-2xl sm:text-3xl overflow-hidden md:text-4xl lg:text-[40px] font-semibold text-[#15A1BF]">
+                ${price}
+              </p>{" "}
+              <p className="mt-1 text-[#6C696D]">{price_basis}</p>
             </div>
+          </div>
+          <div className="text-lg mb-10">{date}</div>
+          <div className=" mb-5">
+            <Button
+              variant="ghost"
+              fullWidth
+              className="rounded-md bg-[#15A1BF] text-white  "
+            >
+              {cta_text}
+            </Button>
+          </div>
+          <div className="">
+            <p className="mb-1 text-[#6C696D] flex items-center gap-1">
+              {" "}
+              <Check /> {customer_support}
+            </p>
+            <p className="mb-1 text-[#6C696D] flex items-center gap-1">
+              {" "}
+              <Check /> {cancellation_policy}
+            </p>
+            <p className="mb-1 text-[#6C696D] flex items-center gap-1">
+              {" "}
+              <Check /> {duration}
+            </p>
           </div>
         </div>
       </div>

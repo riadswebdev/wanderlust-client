@@ -1,4 +1,4 @@
-"use client";
+import { addDestination } from "../lib/action";
 import {
   Button,
   FieldError,
@@ -9,8 +9,7 @@ import {
   TextField,
   Select,
 } from "@heroui/react";
-import React from "react";
-import { addDestination } from "../lib/action";
+
 
 const AddDestinationPage = () => {
   return (
@@ -133,7 +132,7 @@ const AddDestinationPage = () => {
           variant="outline"
           className=" rounded-none w-full bg-cyan-500 text-white"
         >
-            Add Destination
+          Add Destination
         </Button>
       </form>
     </div>

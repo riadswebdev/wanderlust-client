@@ -19,11 +19,11 @@ const DestinationCard = ({ d }) => {
   return (
     <div>
       <Card className="w-full ">
-        <div className="relative  w-full aspect-video overflow-hidden rounded-2xl ">
+        <div className="relative w-full aspect-video overflow-hidden rounded-2xl ">
           <Image
             unoptimized
             src={imageUrl}
-            className="object-cover"
+            className="object-cover  "
             alt={destinationName}
             fill
           />
