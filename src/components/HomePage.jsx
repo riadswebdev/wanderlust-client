@@ -7,11 +7,11 @@ import { allDestinations } from "@/app/lib/data";
 const HomePage = async () => {
   const destinations = await allDestinations();
   return (
-    <div className="mx-5 xl:mx-0">
+    <div className="mx-5 xl:mx-0 mt-96 sm:mt-50 md:mt-0">
       <div className="w-full max-w-360 mx-auto">
         <div className="flex items-center justify-between">
           <div className="">
-            <h2 className="mt-20 mb-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
+            <h2 className=" mb-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
               Featured Destinations
             </h2>
             <p className="text-lg text-[#6C696D]">

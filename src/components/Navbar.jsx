@@ -5,7 +5,7 @@ import NavLink from "./NavLink";
 const Navbar = () => {
   return (
     <div className=" pr-5 xl:pr-0 shadow sticky z-50 backdrop-blur-2xl top-0 mb-10">
-      <nav className="relative flex items-center justify-between p-4 w-full max-w-300 mx-auto">
+      <nav className="relative flex items-center justify-between p-4 w-full ">
         <div className="md:hidden ">
           <MobileMenu />
         </div>
