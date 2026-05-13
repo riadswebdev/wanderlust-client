@@ -31,7 +31,7 @@ const SignUpPage = () => {
     const form = new FormData(event.target);
     const formData = Object.fromEntries(form.entries());
     delete formData.confirmPassword;
-    console.log(formData);
+  
   };
 
   return (
