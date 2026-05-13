@@ -8,6 +8,7 @@ import { CiPaperplane } from "react-icons/ci";
 import { RiHomeHeartLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
 import { IoIosAddCircleOutline } from "react-icons/io";
+import { Icon } from "@iconify/react";
 
 const MobileMenu = () => {
   const router = useRouter();
@@ -45,51 +46,61 @@ const MobileMenu = () => {
             <Dropdown.Item onPress={() => router.push("/")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Home</span>
-                <RiHomeHeartLine />
+                <Icon icon="flat-color-icons:home" className="size-5" />
               </div>
             </Dropdown.Item>
 
             <Dropdown.Item onPress={() => router.push("/profile")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Profile</span>
-                <PersonPencil />
+                <Icon icon="marketeq:edit-user-6" className="size-5" />
               </div>
             </Dropdown.Item>
             <Dropdown.Item onPress={() => router.push("/admin")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Admin</span>
-                <MdOutlineAdminPanelSettings className="size-3.5 text-muted" />
+                <Icon
+                  icon="material-icon-theme:folder-admin-open"
+                  className="size-5"
+                />
               </div>
             </Dropdown.Item>
 
             <Dropdown.Item onPress={() => router.push("/my-books")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>My Books</span>
-                <SiBookstack className="size-3.5 text-muted" />
+                <Icon icon="noto:books" className="size-5" />
               </div>
             </Dropdown.Item>
 
             <Dropdown.Item onPress={() => router.push("/destination")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Destinations</span>
-                <CiPaperplane className="size-3.5 text-muted" />
+                <Icon
+                  icon="streamline-flex-color:location-heart-pin-flat"
+                  className="size-5"
+                />
               </div>
             </Dropdown.Item>
             <Dropdown.Item onPress={() => router.push("/add-destination")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Add Destination</span>
-                <IoIosAddCircleOutline className="size-3.5 text-muted" />
+                <Icon icon="glyphs-poly:layer-plus" className="size-6" />
               </div>
             </Dropdown.Item>
 
             <Dropdown.Item onPress={() => router.push("/login")}>
-              <span className=" mx-auto flex w-full items-center justify-center gap-2 border  text-center py-2  rounded-sm  text-sm  text-[#6C696D]">
-                Login
-              </span>
+              <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
+                <span>Login</span>
+                <Icon
+                  icon="streamline-ultimate-color:login-key"
+                  className="size-5"
+                />
+              </div>
             </Dropdown.Item>
 
             <Dropdown.Item onPress={() => router.push("/signup")}>
-              <span className="border w-full text-center py-3 bg-blue-600 text-white rounded-2xl mx-auto">
+              <span className="flex w-full  items-center justify-center gap-2  p-2    text-center py-3 bg-blue-600 text-white rounded-sm mx-auto">
                 Sign Up
               </span>
             </Dropdown.Item>
@@ -99,7 +110,7 @@ const MobileMenu = () => {
               className="text-danger"
               color="danger"
             >
-              <div className="flex w-full items-center justify-between gap-2">
+              <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Log Out</span>
                 <ArrowRightFromSquare className="size-3.5" />
               </div>
