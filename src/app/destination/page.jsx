@@ -1,6 +1,13 @@
 import DestinationCard from "@/components/DestinationCard";
 import { allDestinations } from "../lib/data";
 
+export const metadata = {
+  title: "Wanderlust - All Destinations",
+  description:
+    "Explore all the amazing destinations that Wanderlust has to offer. Find your next adventure today!",
+};
+
+
 const DestinationsPage = async () => {
   const destinations = await allDestinations();
 

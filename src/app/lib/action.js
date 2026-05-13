@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+
 export const addDestination = async (formData) => {
   console.log(formData);
   const destinationName = Object.fromEntries(formData.entries());

@@ -10,7 +10,7 @@ const BackToDestination = () => {
     <Button
       onClick={() => router.back()}
       variant="ghost"
-      className="border rounded-md  text-[#6C696D] text-xl py-5"
+      className="border rounded-md  text-[#6C696D] font-normal py-2"
     >
       <GoArrowLeft /> Back to Destinations
     </Button>

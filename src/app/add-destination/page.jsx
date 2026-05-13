@@ -11,6 +11,12 @@ import {
 } from "@heroui/react";
 
 
+export const metadata = {
+  title: "Wanderlust - Add Destination",
+  description:
+    "Add a new destination to Wanderlust and share your travel experiences with the world!",
+};
+
 const AddDestinationPage = () => {
   return (
     <div>

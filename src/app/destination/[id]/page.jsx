@@ -8,6 +8,11 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 
+export const metadata = {
+  title: "Wanderlust - Destination Details",
+  description:
+    "Discover the details of your favorite destination with Wanderlust. Find everything you need to know before your next adventure!",
+};
 
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
