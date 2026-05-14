@@ -1,9 +1,8 @@
-import Image from "next/image";
+
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { Button } from "@heroui/react";
 import LogOutBtn from "./LogOutBtn";
 
 const Navbar = async () => {
@@ -38,12 +37,7 @@ const Navbar = async () => {
           </li>
         </ul>
         <div className="absolute md:relative right-5 top">
-          <Image
-            src={"/assets/Wanderlast.png"}
-            alt="Description"
-            width={100}
-            height={100}
-          />
+          <h2 className="font-black text-2xl text-[#709ee4]">Wanderlust</h2>
         </div>
         <ul className=" items-center gap-5 hidden md:flex">
           <li>

@@ -29,42 +29,38 @@ const MobileMenu = () => {
           <Avatar>
             {isPending ?
               <RoundedLoading />
-            : <>
-                <Avatar.Image
-                  referrerPolicy="no-referrer"
-                  className="object-cover"
-                  alt={Active?.name || "user"}
-                  src={Active?.image}
-                />
+            : <Avatar.Image
+                referrerPolicy="no-referrer"
+                className="object-cover"
+                alt={Active?.name || "user"}
+                src={Active?.image}
+              />
+            }
+            <Avatar.Fallback delayMs={600}>
+              {Active?.name?.charAt(0) || (
+                <Icon icon="tdesign:user-unknown" className="size-5" />
+              )}
+            </Avatar.Fallback>
+          </Avatar>
+        </Dropdown.Trigger>
+        <Dropdown.Popover className="w-[60%]">
+          <div className="px-3 pt-3 pb-1">
+            <div className="flex items-center gap-2">
+              <Avatar size="sm">
+                {isPending ?
+                  <RoundedLoading />
+                : <Avatar.Image
+                    referrerPolicy="no-referrer"
+                    className="object-cover"
+                    alt={Active?.name || "user"}
+                    src={Active?.image}
+                  />
+                }
                 <Avatar.Fallback delayMs={600}>
                   {Active?.name?.charAt(0) || (
                     <Icon icon="tdesign:user-unknown" className="size-5" />
                   )}
                 </Avatar.Fallback>
-              </>
-            }
-          </Avatar>
-        </Dropdown.Trigger>
-        <Dropdown.Popover className="w-[45%]">
-          <div className="px-3 pt-3 pb-1">
-            <div className="flex items-center gap-2">
-              <Avatar size="sm">
-                {Active ?
-                  <RoundedLoading />
-                : <>
-                    <Avatar.Image
-                      referrerPolicy="no-referrer"
-                      className="object-cover"
-                      alt={Active?.name || "user"}
-                      src={Active?.image}
-                    />
-                    <Avatar.Fallback delayMs={600}>
-                      {Active?.name?.charAt(0) || (
-                        <Icon icon="tdesign:user-unknown" className="size-5" />
-                      )}
-                    </Avatar.Fallback>
-                  </>
-                }
               </Avatar>
               <div className="flex flex-col gap-0">
                 <p className="text-sm leading-5 font-medium">
@@ -76,6 +72,7 @@ const MobileMenu = () => {
               </div>
             </div>
           </div>
+
           <Dropdown.Menu aria-label="Navigation Menu">
             <Dropdown.Item onPress={() => router.push("/")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">

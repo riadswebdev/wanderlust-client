@@ -67,6 +67,12 @@ const SignUpPage = () => {
     }
   };
 
+ const signInWithGoogle = async () => {
+   const data = await authClient.signIn.social({
+     provider: "google",
+   });
+ };
+
   return (
     <div className="mx-5 sm:mx-0">
       <div className="bg-white p-5 sm:p-10 rounded-2xl shadow-lg w-full max-w-125 mx-auto flex flex-col justify-center">
@@ -262,7 +268,11 @@ const SignUpPage = () => {
         </form>
         <div className="text-center">
           <p className="my-4 text-lg text-[#6C696D] ">Or sign up with</p>
-          <Button className="w-full " variant="tertiary">
+          <Button
+            onPress={signInWithGoogle}
+            className="w-full "
+            variant="tertiary"
+          >
             <Icon icon="devicon:google" />
             Sign in with Google
           </Button>

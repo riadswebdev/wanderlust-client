@@ -23,6 +23,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const [signInError, setSignInError] = useState("");
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -52,6 +53,12 @@ const LoginPage = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const signInWithGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -146,7 +153,11 @@ const LoginPage = () => {
         </form>
         <div className="text-center">
           <p className="my-4 text-base text-[#6C696D] ">Or continue with </p>
-          <Button className="w-full " variant="tertiary">
+          <Button
+            onPress={signInWithGoogle}
+            className="w-full "
+            variant="tertiary"
+          >
             <Icon icon="devicon:google" />
             Sign in with Google
           </Button>
