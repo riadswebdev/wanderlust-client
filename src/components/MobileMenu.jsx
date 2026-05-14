@@ -1,43 +1,77 @@
 "use client";
 
-import { ArrowRightFromSquare, PersonPencil } from "@gravity-ui/icons";
+import { ArrowRightFromSquare } from "@gravity-ui/icons";
 import { Avatar, Dropdown } from "@heroui/react";
-import { MdOutlineAdminPanelSettings } from "react-icons/md";
-import { SiBookstack } from "react-icons/si";
-import { CiPaperplane } from "react-icons/ci";
-import { RiHomeHeartLine } from "react-icons/ri";
 import { useRouter } from "next/navigation";
-import { IoIosAddCircleOutline } from "react-icons/io";
 import { Icon } from "@iconify/react";
+import { authClient } from "@/lib/auth-client";
+import RoundedLoading from "./Loading";
 
 const MobileMenu = () => {
   const router = useRouter();
+
+  const { data: session, isPending } = authClient.useSession();
+  const Active = session?.user;
+
+  const handleLogOutBtn = async () => {
+    await authClient.signOut();
+    router.replace("/login");
+  };
+
+  // if (isPending) {
+  //   return <RoundedLoading/>
+  // }
+
   return (
-    <div className="min-w-96">
-      <Dropdown className="min-w-96">
+    <div>
+      <Dropdown>
         <Dropdown.Trigger>
           <Avatar>
-            <Avatar.Image
-              alt="Junior Garcia"
-              src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
-            />
-            <Avatar.Fallback delayMs={600}>JD</Avatar.Fallback>
+            {isPending ?
+              <RoundedLoading />
+            : <>
+                <Avatar.Image
+                  referrerPolicy="no-referrer"
+                  className="object-cover"
+                  alt={Active?.name || "user"}
+                  src={Active?.image}
+                />
+                <Avatar.Fallback delayMs={600}>
+                  {Active?.name?.charAt(0) || (
+                    <Icon icon="tdesign:user-unknown" className="size-5" />
+                  )}
+                </Avatar.Fallback>
+              </>
+            }
           </Avatar>
         </Dropdown.Trigger>
-        <Dropdown.Popover className="w-[40%]">
+        <Dropdown.Popover className="w-[45%]">
           <div className="px-3 pt-3 pb-1">
             <div className="flex items-center gap-2">
               <Avatar size="sm">
-                <Avatar.Image
-                  alt="Jane"
-                  src="https://heroui-assets.nyc3.cdn.digitaloceanspaces.com/avatars/orange.jpg"
-                />
-                <Avatar.Fallback delayMs={1000}>JD</Avatar.Fallback>
+                {Active ?
+                  <RoundedLoading />
+                : <>
+                    <Avatar.Image
+                      referrerPolicy="no-referrer"
+                      className="object-cover"
+                      alt={Active?.name || "user"}
+                      src={Active?.image}
+                    />
+                    <Avatar.Fallback delayMs={600}>
+                      {Active?.name?.charAt(0) || (
+                        <Icon icon="tdesign:user-unknown" className="size-5" />
+                      )}
+                    </Avatar.Fallback>
+                  </>
+                }
               </Avatar>
               <div className="flex flex-col gap-0">
-                <p className="text-sm leading-5 font-medium">Jane Doe</p>
+                <p className="text-sm leading-5 font-medium">
+                  {Active?.name || "unknown"}
+                </p>
                 <p className="text-xs leading-none text-muted">
-                  jane@example.com
+                  {Active?.email || "Unavailable Email "}
                 </p>
               </div>
             </div>
@@ -56,6 +90,7 @@ const MobileMenu = () => {
                 <Icon icon="marketeq:edit-user-6" className="size-5" />
               </div>
             </Dropdown.Item>
+
             <Dropdown.Item onPress={() => router.push("/admin")}>
               <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
                 <span>Admin</span>
@@ -89,32 +124,37 @@ const MobileMenu = () => {
               </div>
             </Dropdown.Item>
 
-            <Dropdown.Item onPress={() => router.push("/login")}>
-              <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
-                <span>Login</span>
-                <Icon
-                  icon="streamline-ultimate-color:login-key"
-                  className="size-5"
-                />
-              </div>
-            </Dropdown.Item>
+            {!Active ?
+              <>
+                <Dropdown.Item onPress={() => router.push("/login")}>
+                  <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
+                    <span>Login</span>
+                    <Icon
+                      icon="streamline-ultimate-color:login-key"
+                      className="size-5"
+                    />
+                  </div>
+                </Dropdown.Item>
 
-            <Dropdown.Item onPress={() => router.push("/signup")}>
-              <span className="flex w-full  items-center justify-center gap-2  p-2    text-center py-3 bg-blue-600 text-white rounded-sm mx-auto">
-                Sign Up
-              </span>
-            </Dropdown.Item>
-
-            <Dropdown.Item
-              onPress={() => router.push("/logout")}
-              className="text-danger"
-              color="danger"
-            >
-              <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
-                <span>Log Out</span>
-                <ArrowRightFromSquare className="size-3.5" />
-              </div>
-            </Dropdown.Item>
+                <Dropdown.Item onPress={() => router.push("/signup")}>
+                  <span className="flex w-full  items-center justify-center gap-2  p-2    text-center py-3 bg-blue-600 text-white rounded-sm mx-auto">
+                    Sign Up
+                  </span>
+                </Dropdown.Item>
+              </>
+            : <>
+                <Dropdown.Item
+                  onPress={handleLogOutBtn}
+                  className="text-danger"
+                  color="danger"
+                >
+                  <div className="flex w-full  items-center justify-center gap-2 border  text-center p-2 rounded-sm mx-auto text-sm  text-[#6C696D]">
+                    <span>Log Out</span>
+                    <ArrowRightFromSquare className="size-3.5" />
+                  </div>
+                </Dropdown.Item>
+              </>
+            }
           </Dropdown.Menu>
         </Dropdown.Popover>
       </Dropdown>

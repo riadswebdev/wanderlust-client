@@ -1,8 +1,18 @@
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { Button } from "@heroui/react";
+import LogOutBtn from "./LogOutBtn";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const Active = session?.user;
+
   return (
     <div className="w-full max-w-300 mx-auto  sticky z-50  top-1 mb-10">
       <nav className="relative flex backdrop-blur-2xl items-center justify-between p-2 md:p-4 md:mx-5 xl:mx-0 md:rounded-full">
@@ -39,12 +49,21 @@ const Navbar = () => {
           <li>
             <NavLink href="/profile">Profile</NavLink>
           </li>
-          <li>
-            <NavLink href="/login">Login</NavLink>
-          </li>
-          <li>
-            <NavLink href="/signup">Sign Up</NavLink>
-          </li>
+          {Active ?
+            <>
+              <li>
+                <LogOutBtn />
+              </li>
+            </>
+          : <>
+              <li>
+                <NavLink href="/login">Login</NavLink>
+              </li>
+              <li>
+                <NavLink href="/signup">Sign Up</NavLink>
+              </li>
+            </>
+          }
         </ul>
       </nav>
     </div>
