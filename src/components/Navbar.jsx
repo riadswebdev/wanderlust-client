@@ -4,13 +4,13 @@ import NavLink from "./NavLink";
 
 const Navbar = () => {
   return (
-    <div className=" pr-5 xl:pr-0 shadow sticky z-50 backdrop-blur-2xl top-0 mb-10">
-      <nav className="relative flex items-center justify-between p-4 w-full ">
+    <div className="w-full max-w-300 mx-auto  sticky z-50  top-1 mb-10">
+      <nav className="relative flex backdrop-blur-2xl items-center justify-between p-2 md:p-4 md:mx-5 xl:mx-0 md:rounded-full">
         <div className="md:hidden ">
           <MobileMenu />
         </div>
 
-        <ul className="  items-center gap-5 hidden md:flex">
+        <ul className="  items-center gap-5 hidden md:flex p-">
           <li>
             <NavLink href="/">Home</NavLink>
           </li>
@@ -27,7 +27,7 @@ const Navbar = () => {
             <NavLink href="/add-destination">AD</NavLink>
           </li>
         </ul>
-        <div className="absolute md:relative right-0 top">
+        <div className="absolute md:relative right-5 top">
           <Image
             src={"/assets/Wanderlast.png"}
             alt="Description"

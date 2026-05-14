@@ -4,6 +4,9 @@ import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeSlash } from "@gravity-ui/icons";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Description,
@@ -18,37 +21,70 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [signUpError, setSignUpError] = useState("");
 
-  // Check if the password and confirm password fields match
+  const router = useRouter();
+
   const validPassword =
     password && confirmPassword && password === confirmPassword;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setSignUpError("");
+    try {
+      const form = new FormData(event.target);
+      const formData = Object.fromEntries(form.entries());
+      delete formData.confirmPassword;
 
-    const form = new FormData(event.target);
-    const formData = Object.fromEntries(form.entries());
-    delete formData.confirmPassword;
-  
+      const { error } = await authClient.signUp.email({
+        name: formData.name,
+        image: formData.image || undefined,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (error) {
+        setSignUpError(error.message);
+        toast.error(`${error.message}`);
+        return;
+      } else {
+        toast.success("Account created successfully");
+        event.target.reset();
+        setPassword("");
+        setConfirmPassword("");
+        setTimeout(() => {
+          router.push("/login");
+        }, 1000);
+      }
+    } catch (error) {
+      setSignUpError("Something went wrong");
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="mx-5 sm:mx-0">
-      <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-150 mx-auto ">
-        <div className="mb-6 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-2 text-neutral-900">
+      <div className="bg-white p-5 sm:p-10 rounded-2xl shadow-lg w-full max-w-125 mx-auto flex flex-col justify-center">
+        <div className="mb-6 ">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mb-2 text-neutral-900 font-medium">
             Create Account
           </h2>
-          <p className="text-[#6C696D] text-base sm:text-lg ">
+          <p className="text-[#6C696D] sm:text-base  ">
             Start your adventure with Wanderlust
           </p>
+          <p className="mt-2 text-sm text-danger text-center">{signUpError}</p>
         </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <TextField isRequired type="text" name="name">
-            <Label className="text-lg font-medium text-neutral-800">Name</Label>
-            <InputGroup>
+            <Label className="text-base font-medium text-neutral-800">
+              Name
+            </Label>
+            <InputGroup className="border border-black/20">
               <InputGroup.Prefix>
                 <Icon icon="glyphs-poly:user" className="size-6" />
               </InputGroup.Prefix>
@@ -58,6 +94,23 @@ const SignUpPage = () => {
                 placeholder="Enter your name"
               />
             </InputGroup>
+            <FieldError />
+          </TextField>
+
+          <TextField isRequired type="url" name="image">
+            <Label className="text-base font-medium text-neutral-800">
+              Image URL
+            </Label>
+            <InputGroup className="border border-black/20">
+              <InputGroup.Prefix>
+                <Icon icon="glyphs-poly:image" className="size-6" />
+              </InputGroup.Prefix>
+              <InputGroup.Input
+                placeholder="https://i.ibb.com/profile/i.png"
+                className="text-base text-[#6C696D] "
+              />
+            </InputGroup>
+            <FieldError />
           </TextField>
 
           <TextField
@@ -71,17 +124,17 @@ const SignUpPage = () => {
               return null;
             }}
           >
-            <Label className="text-lg font-medium text-neutral-800">
+            <Label className="text-base font-medium text-neutral-800">
               Email address
             </Label>
-            <InputGroup>
+            <InputGroup className="border border-black/20">
               <InputGroup.Prefix>
                 <Icon icon="material-icon-theme:email" className="size-5" />
               </InputGroup.Prefix>
               <InputGroup.Input
                 className="text-base text-[#6C696D] "
                 type="email"
-                placeholder="name@email.com"
+                placeholder="example@email.com"
               />
             </InputGroup>
             <FieldError />
@@ -106,10 +159,10 @@ const SignUpPage = () => {
               return null;
             }}
           >
-            <Label className="text-lg font-medium text-neutral-800">
+            <Label className="text-base font-medium text-neutral-800">
               Password
             </Label>
-            <InputGroup>
+            <InputGroup className="border border-black/20">
               <InputGroup.Prefix>
                 <Icon icon="glyphs-poly:lock" className="size-6" />
               </InputGroup.Prefix>
@@ -119,7 +172,7 @@ const SignUpPage = () => {
                 placeholder="Enter your password"
                 type={isVisible ? "text" : "password"}
               />
-              <InputGroup.Suffix className="pr-0">
+              <InputGroup.Suffix className="p-0">
                 <Button
                   isIconOnly
                   aria-label={isVisible ? "Hide password" : "Show password"}
@@ -133,9 +186,7 @@ const SignUpPage = () => {
                 </Button>
               </InputGroup.Suffix>
             </InputGroup>
-            <Description>
-              Must be at least 8 characters with 1 uppercase and 1 number
-            </Description>
+
             <FieldError />
           </TextField>
 
@@ -153,28 +204,32 @@ const SignUpPage = () => {
               return null;
             }}
           >
-            <Label className="text-lg font-medium text-neutral-800">
+            <Label className="text-base font-medium text-neutral-800">
               Confirm Password
             </Label>
-            <InputGroup>
+            <InputGroup className="border border-black/20 ">
               <InputGroup.Prefix>
                 <Icon icon="glyphs-poly:lock" className="size-6" />
               </InputGroup.Prefix>
+
               <InputGroup.Input
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="text-base  text-[#6C696D] "
                 placeholder="Enter confirm Password"
-                type={isVisible ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
               />
-              <InputGroup.Suffix className="pr-0">
+
+              <InputGroup.Suffix className="p-0 ">
                 <Button
                   isIconOnly
-                  aria-label={isVisible ? "Hide password" : "Show password"}
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
                   size="sm"
                   variant="ghost"
-                  onPress={() => setIsVisible(!isVisible)}
+                  onPress={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {isVisible ?
+                  {showConfirmPassword ?
                     <Eye className="size-4" />
                   : <EyeSlash className="size-4" />}
                 </Button>
@@ -182,17 +237,17 @@ const SignUpPage = () => {
             </InputGroup>
             <Description>
               {!confirmPassword ?
-                "Must be at least 8 characters with 1 uppercase and 1 number"
+                ""
               : validPassword ?
-                "Passwords match"
-              : "Passwords do not match"}
+                <span className="text-green-600">Passwords match</span>
+              : <span className="text-red-500">Passwords do not match</span>}
             </Description>
             <FieldError />
           </TextField>
 
           <div className="flex gap-2">
             <Button
-              isDisabled={!validPassword}
+              isDisabled={!validPassword || loading}
               className="w-full"
               type="submit"
             >
@@ -206,7 +261,7 @@ const SignUpPage = () => {
           </div>
         </form>
         <div className="text-center">
-          <p className="my-4 text-lg text-[#6C696D] ">Or sign up </p>
+          <p className="my-4 text-lg text-[#6C696D] ">Or sign up with</p>
           <Button className="w-full " variant="tertiary">
             <Icon icon="devicon:google" />
             Sign in with Google
