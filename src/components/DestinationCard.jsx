@@ -8,13 +8,13 @@ const DestinationCard = ({ d }) => {
   const {
     category,
     country,
-    departureDate,
     description,
     destinationName,
     duration,
     imageUrl,
     price,
   } = d;
+  
 
   return (
     <div>

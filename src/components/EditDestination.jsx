@@ -1,6 +1,7 @@
 "use client";
 
 import { Envelope } from "@gravity-ui/icons";
+import { updateDestination } from "@/app/lib/action";
 import { CiEdit } from "react-icons/ci";
 import {
   Button,
@@ -14,7 +15,6 @@ import {
   Select,
   TextField,
 } from "@heroui/react";
-import { updateDestination } from "@/app/lib/action";
 
 export function EditDestination({ destination }) {
   const {
@@ -27,23 +27,9 @@ export function EditDestination({ destination }) {
     departureDate = "",
     duration = 0,
     price = 0,
-    highlights = [],
-    customer_support = "",
-    cancellation_policy = "",
-    cta_text = "",
-    date = "",
-    duration_days = 0,
-    duration_nights = 0,
-    highlightsSummary = "",
-    overview = "",
-    price_basis = "",
-    rating = 0,
-    review_count = 0,
-    starting_price_usd = 0,
-    travel_insurance_included = false,
   } = destination || {};
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     await updateDestination(_id, e);
   };
 

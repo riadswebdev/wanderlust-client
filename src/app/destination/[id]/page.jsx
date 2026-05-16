@@ -1,10 +1,10 @@
 import { getDestinationById } from "@/app/lib/data";
 import BackToDestination from "@/components/BackToDestination";
+import BookingCard from "@/components/BookingCard";
 import { DeleteDestination } from "@/components/DeleteDestination";
 import { EditDestination } from "@/components/EditDestination";
 import { ProverDeleteBtn } from "@/components/Prover";
 import { Calendar, Check, StarFill } from "@gravity-ui/icons";
-import { Button } from "@heroui/react";
 import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 
@@ -17,33 +17,20 @@ export const metadata = {
 const DetailsPage = async ({ params }) => {
   const { id } = await params;
   const destination = await getDestinationById(id);
-  console.log(destination);
 
-    const {
-      _id,
+  const {
     destinationName = "",
-    description = "",
-    imageUrl = "Default Image URL",
-    category = "",
-    country = new Date(),
-    departureDate = "",
-    duration = 0,
-    price = 0,
-    highlights = [],
-    customer_support = "",
-    cancellation_policy = "",
-    cta_text = "",
-    date = "",
+    country = "",
     duration_days = 0,
     duration_nights = 0,
     highlightsSummary = "",
     overview = "",
-    price_basis = "",
+    highlights = [],
     rating = 0,
     review_count = 0,
-    starting_price_usd = 0,
-    travel_insurance_included = false,
   } = destination || {};
+console.log(id,"iddddddddd")
+  console.log(destination);
   return (
     <div className="mx-5 xl:mx-0">
       <div className="w-full max-w-7xl mx-auto ">
@@ -60,8 +47,7 @@ const DetailsPage = async ({ params }) => {
           </div>
           <div className="relative w-full h-auto lg:h-140 aspect-video mb-20 mx-auto">
             <Image
-             
-              src={imageUrl}
+              src={destination?.imageUrl || ""}
               alt={destinationName}
               fill
               className="rounded-lg object-cover mx-auto"
@@ -111,46 +97,7 @@ const DetailsPage = async ({ params }) => {
             </ul>
           </div>
 
-          <div className="border-2 shadow p-5 rounded-lg w-full md:max-w-100 ">
-            <div className="mb-5">
-              <div className="">
-                <p
-                  className="mb-1 text-[#6C696D]
-              "
-                >
-                  Starting from
-                </p>
-                <p className="text-2xl sm:text-3xl overflow-hidden md:text-4xl lg:text-[40px] font-semibold text-[#15A1BF]">
-                  ${price}
-                </p>{" "}
-                <p className="mt-1 text-[#6C696D]">{price_basis}</p>
-              </div>
-            </div>
-            <div className="text-lg mb-10">{date}</div>
-            <div className=" mb-5">
-              <Button
-                variant="ghost"
-                fullWidth
-                className="rounded-md bg-[#15A1BF] text-white  "
-              >
-                {cta_text}
-              </Button>
-            </div>
-            <div className="">
-              <p className="mb-1 text-[#6C696D] flex items-center gap-1">
-                {" "}
-                <Check /> {customer_support}
-              </p>
-              <p className="mb-1 text-[#6C696D] flex items-center gap-1">
-                {" "}
-                <Check /> {cancellation_policy}
-              </p>
-              <p className="mb-1 text-[#6C696D] flex items-center gap-1">
-                {" "}
-                <Check /> {duration}
-              </p>
-            </div>
-          </div>
+          <BookingCard destination={destination} />
         </div>
       </div>
     </div>
