@@ -1,4 +1,3 @@
-
 import MobileMenu from "./MobileMenu";
 import NavLink from "./NavLink";
 import { auth } from "@/lib/auth";
@@ -43,13 +42,13 @@ const Navbar = async () => {
           <li>
             <NavLink href="/profile">Profile</NavLink>
           </li>
-          {Active ?
+          {Active && (
+            <li>
+              <LogOutBtn />
+            </li>
+          )}
+          {!Active && (
             <>
-              <li>
-                <LogOutBtn />
-              </li>
-            </>
-          : <>
               <li>
                 <NavLink href="/login">Login</NavLink>
               </li>
@@ -57,7 +56,7 @@ const Navbar = async () => {
                 <NavLink href="/signup">Sign Up</NavLink>
               </li>
             </>
-          }
+          )}
         </ul>
       </nav>
     </div>
