@@ -2,15 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { BASE_URL } from "./config";
+import { BASE_URL, getToken } from "./config";
 
 export const addDestination = async (formData) => {
   const destinationData = Object.fromEntries(formData.entries());
   try {
+    const token = await getToken();
     const response = await fetch(`${BASE_URL}/destination`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        autorization: `Bearer ${token}`,
       },
       body: JSON.stringify(destinationData),
     });
@@ -18,6 +20,7 @@ export const addDestination = async (formData) => {
     if (!response.ok) {
       throw new Error("Failed to add destination");
     }
+    console.log(token, "tokent sdijdoiijed0igjed0");
 
     console.log("Destination added successfully");
   } catch (error) {

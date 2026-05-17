@@ -29,8 +29,7 @@ const DetailsPage = async ({ params }) => {
     rating = 0,
     review_count = 0,
   } = destination || {};
-console.log(id,"iddddddddd")
-  console.log(destination);
+
   return (
     <div className="mx-5 xl:mx-0">
       <div className="w-full max-w-7xl mx-auto ">
@@ -47,6 +46,7 @@ console.log(id,"iddddddddd")
           </div>
           <div className="relative w-full h-auto lg:h-140 aspect-video mb-20 mx-auto">
             <Image
+              unoptimized
               src={destination?.imageUrl || ""}
               alt={destinationName}
               fill

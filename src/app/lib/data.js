@@ -1,8 +1,10 @@
-import { BASE_URL } from "./config";
+import { BASE_URL, getToken } from "./config";
 
 export const allDestinations = async () => {
   try {
+     const token = await getToken();
     const res = await fetch(`${BASE_URL}/destination`);
+    console.log(token, "all destination ")
     return await res.json();
   } catch (error) {
     console.error("Error fetching destinations:", error);
@@ -12,7 +14,11 @@ export const allDestinations = async () => {
 
 export const getDestinationById = async (id) => {
   try {
-    const res = await fetch(`${BASE_URL}/destination/${id}`);
+    const res = await fetch(`${BASE_URL}/destination/${id}`, {
+      headers: {
+        
+      }
+    });
     return await res.json();
   } catch (error) {
     console.error(`Error fetching destination with id ${id}:`, error);
