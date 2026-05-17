@@ -12,7 +12,7 @@ export const addDestination = async (formData) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        autorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(destinationData),
     });
